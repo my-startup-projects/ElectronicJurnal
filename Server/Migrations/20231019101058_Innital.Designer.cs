@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicJurnal.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231019043602_Initial")]
-    partial class Initial
+    [Migration("20231019101058_Innital")]
+    partial class Innital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

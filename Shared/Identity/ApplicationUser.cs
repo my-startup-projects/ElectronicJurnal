@@ -1,11 +1,14 @@
+using ElectronicJurnal.Shared.Entity;
+
 namespace ElectronicJurnal.Shared.Identity;
 
 #nullable disable
-public class ApplicationUser
+public class ApplicationUser : BaseEntity
 {
-    public Guid Id { get; set; }
     public string Username { get; set; }
     public string Password { get; set; }
-    public string Role { get; set; }
-    //you may add more properties here
+    public string Role { get; set; }   
+    public string FullName { get; set; }
+
+    public DateOnly DateOfBirthday { get; set; }    
 }
