@@ -1,8 +1,8 @@
-using ElectronicJurnal.Shared.Entity;
-using ElectronicJurnal.Shared.Identity;
+using ElectronicJournal.Shared.Entity;
+using ElectronicJournal.Shared.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace ElectronicJurnal.Server.DataBase;
+namespace ElectronicJournal.Server.DataBase;
 
 #nullable disable
 public class ApplicationDbContext : DbContext

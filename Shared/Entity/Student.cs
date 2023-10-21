@@ -4,9 +4,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using ElectronicJurnal.Shared.Identity;
+using ElectronicJournal.Shared.Identity;
 
-namespace ElectronicJurnal.Shared.Entity
+namespace ElectronicJournal.Shared.Entity
 {
 	public class Student : ApplicationUser
 	{

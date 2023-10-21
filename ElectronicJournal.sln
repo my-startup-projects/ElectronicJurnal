@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicJurnal.Server", "Server\ElectronicJurnal.Server.csproj", "{B4F5C804-DB84-4820-9AB1-ABDD33E3E2D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicJournal.Server", "Server\ElectronicJournal.Server.csproj", "{B4F5C804-DB84-4820-9AB1-ABDD33E3E2D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicJurnal.Client", "Client\ElectronicJurnal.Client.csproj", "{6FD94747-1D43-4BC7-8760-FE27545EBAA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicJournal.Client", "Client\ElectronicJournal.Client.csproj", "{6FD94747-1D43-4BC7-8760-FE27545EBAA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicJurnal.Shared", "Shared\ElectronicJurnal.Shared.csproj", "{0BF8C242-B321-4BC9-9B20-28072F962ECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicJournal.Shared", "Shared\ElectronicJournal.Shared.csproj", "{0BF8C242-B321-4BC9-9B20-28072F962ECB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

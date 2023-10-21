@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectronicJurnal.Shared.Entity
+namespace ElectronicJournal.Shared.Entity
 {
 	public class BaseEntity
 	{

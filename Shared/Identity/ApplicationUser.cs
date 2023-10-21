@@ -1,6 +1,6 @@
-using ElectronicJurnal.Shared.Entity;
+using ElectronicJournal.Shared.Entity;
 
-namespace ElectronicJurnal.Shared.Identity;
+namespace ElectronicJournal.Shared.Identity;
 
 #nullable disable
 public class ApplicationUser : BaseEntity

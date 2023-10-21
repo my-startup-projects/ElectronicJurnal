@@ -1,6 +1,6 @@
-﻿using ElectronicJurnal.Shared.Identity;
+﻿using ElectronicJournal.Shared.Identity;
 
-namespace ElectronicJurnal.Shared.Entity
+namespace ElectronicJournal.Shared.Entity
 {
 	public class Teacher : ApplicationUser
 	{

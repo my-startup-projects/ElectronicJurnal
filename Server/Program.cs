@@ -1,7 +1,10 @@
-using ElectronicJurnal.Server.DataBase;
+using ElectronicJournal.Server.DataBase;
+using ElectronicJournal.Server.Services.Teachers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
-namespace ElectronicJurnal.Server
+namespace ElectronicJournal.Server
 {
 	public class Program
 	{
@@ -17,6 +20,14 @@ namespace ElectronicJurnal.Server
 			builder.Services.AddDbContextPool<ApplicationDbContext>
 				(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+			builder.Services.AddEndpointsApiExplorer();
+			builder.Services.AddSwaggerGen();
+
+			builder.Services.AddScoped<ITeachersService, TeachersService>();
+
+			builder.Services.AddAutoMapper(typeof(Program));
+			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 			var app = builder.Build();
 
 			if (app.Environment.IsDevelopment())
@@ -28,6 +39,13 @@ namespace ElectronicJurnal.Server
 				app.UseExceptionHandler("/Error");
 				app.UseHsts();
 			}
+
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+			});
+
 
 			app.UseHttpsRedirection();
 

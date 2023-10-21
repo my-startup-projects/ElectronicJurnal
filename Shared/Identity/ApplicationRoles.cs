@@ -1,4 +1,4 @@
-namespace ElectronicJurnal.Shared.Identity;
+namespace ElectronicJournal.Shared.Identity;
 
 public static class ApplicationRoles
 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ElectronicJurnal.Server.Migrations
+namespace ElectronicJournal.Server.Migrations
 {
     /// <inheritdoc />
     public partial class Innital : Migration

@@ -1,8 +1,8 @@
-using ElectronicJurnal.Client;
+using ElectronicJournal.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-namespace ElectronicJurnal.Client
+namespace ElectronicJournal.Client
 {
 	public class Program
 	{

@@ -1,4 +1,4 @@
-﻿namespace ElectronicJurnal.Shared.Entity
+﻿namespace ElectronicJournal.Shared.Entity
 {
 	public class Grade : BaseEntity
 	{
