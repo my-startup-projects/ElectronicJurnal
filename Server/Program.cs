@@ -1,8 +1,7 @@
 using ElectronicJournal.Server.DataBase;
+using ElectronicJournal.Server.Services.Students;
 using ElectronicJournal.Server.Services.Teachers;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 
 namespace ElectronicJournal.Server
 {
@@ -24,6 +23,7 @@ namespace ElectronicJournal.Server
 			builder.Services.AddSwaggerGen();
 
 			builder.Services.AddScoped<ITeachersService, TeachersService>();
+			builder.Services.AddScoped<IStudentsService, StudentsService>();
 
 			builder.Services.AddAutoMapper(typeof(Program));
 			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
