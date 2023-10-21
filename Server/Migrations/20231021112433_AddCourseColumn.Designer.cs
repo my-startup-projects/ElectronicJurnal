@@ -3,6 +3,7 @@ using System;
 using ElectronicJournal.Server.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicJournal.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231021112433_AddCourseColumn")]
+    partial class AddCourseColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace ElectronicJournal.Server.Migrations
 
             modelBuilder.Entity("ElectronicJournal.Shared.Entity.Exam", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -37,7 +40,7 @@ namespace ElectronicJournal.Server.Migrations
                     b.Property<Guid>("SubjectID")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("StudentID");
 
@@ -48,7 +51,7 @@ namespace ElectronicJournal.Server.Migrations
 
             modelBuilder.Entity("ElectronicJournal.Shared.Entity.Grade", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -67,7 +70,7 @@ namespace ElectronicJournal.Server.Migrations
                     b.Property<bool>("isAbsent")
                         .HasColumnType("tinyint(1)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("JournalID");
 
@@ -78,7 +81,7 @@ namespace ElectronicJournal.Server.Migrations
 
             modelBuilder.Entity("ElectronicJournal.Shared.Entity.Journal", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -89,7 +92,7 @@ namespace ElectronicJournal.Server.Migrations
                     b.Property<Guid>("SchoolClassID")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("SchoolClassID");
 
@@ -98,7 +101,7 @@ namespace ElectronicJournal.Server.Migrations
 
             modelBuilder.Entity("ElectronicJournal.Shared.Entity.Schedule", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -117,7 +120,7 @@ namespace ElectronicJournal.Server.Migrations
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("time(6)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("SchoolClassID");
 
@@ -130,7 +133,7 @@ namespace ElectronicJournal.Server.Migrations
 
             modelBuilder.Entity("ElectronicJournal.Shared.Entity.SchoolClass", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -141,14 +144,14 @@ namespace ElectronicJournal.Server.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("SchoolClasses");
                 });
 
             modelBuilder.Entity("ElectronicJournal.Shared.Entity.Subject", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -156,14 +159,14 @@ namespace ElectronicJournal.Server.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("ElectronicJournal.Shared.Identity.ApplicationUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -186,7 +189,7 @@ namespace ElectronicJournal.Server.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Users");
 

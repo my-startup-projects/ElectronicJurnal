@@ -59,7 +59,7 @@ namespace ElectronicJournal.Server.Services.Students
 			var response = new ServiceResponse<bool>();
 			try
 			{
-				var Student = await _dbContext.Students.FirstOrDefaultAsync(t => t.ID == studentId);
+				var Student = await _dbContext.Students.FirstOrDefaultAsync(t => t.Id == studentId);
 				if (Student == null)
 				{
 					response.Success = false;
@@ -85,7 +85,7 @@ namespace ElectronicJournal.Server.Services.Students
 			try
 			{
 				var Student = await _dbContext.Students
-					.FirstOrDefaultAsync(t => t.ID == updateStudentDto.Id);
+					.FirstOrDefaultAsync(t => t.Id == updateStudentDto.Id);
 				if (Student == null)
 				{
 					respoonse.Success = false;
