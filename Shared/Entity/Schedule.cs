@@ -2,14 +2,13 @@
 {
 	public class Schedule : BaseEntity
 	{
-
 		public Guid SchoolClassID { get; set; }
-		public SchoolClass SchoolClass { get; set; }
+		public virtual SchoolClass SchoolClass { get; set; }
 		public Guid SubjectID { get; set; }
-		public Subject Subject { get; set; }
+		public virtual Subject Subject { get; set; } 
 		public Guid TeacherID { get; set; }
-		public Teacher Teacher { get; set; }
+		public virtual Teacher Teacher { get; set; }
 		public DayOfWeek DayOfWeek { get; set; }
-		public TimeSpan Time { get; set; }
+		public int Time { get; set; }
 	}
 }

@@ -23,10 +23,10 @@ namespace ElectronicJournal.Server.Services.Students
 			var response = new ServiceResponse<bool>();
 			try
 			{
-				var Student = _mapper.Map<Student>(studentsDto);
-				Student.Role = ApplicationRoles.Student;
+				var student = _mapper.Map<Student>(studentsDto);
+				student.Role = ApplicationRoles.Student;
 
-				await _dbContext.AddAsync(Student);
+				await _dbContext.Students.AddAsync(student);
 				await _dbContext.SaveChangesAsync();
 				response.Data = true;
 			}
@@ -38,13 +38,40 @@ namespace ElectronicJournal.Server.Services.Students
 			return response;
 		}
 
-		public async Task<ServiceResponse<List<Student>>> GetStudents()
+		public async Task<ServiceResponse<bool>> AddStudentToSchoolClass(Guid studentId, Guid schoolClassId)
 		{
-			var response = new ServiceResponse<List<Student>>();
 			try
 			{
-				var Students = await _dbContext.Students.ToListAsync();
-				response.Data = Students;
+				var student = await _dbContext.Students
+					.FirstOrDefaultAsync(s => s.Id == studentId);
+				if (student == null)
+					return new ServiceResponse<bool> { Success = false, Message = "student not found" };
+				var schoolClass = await _dbContext.SchoolClasses
+					.FirstOrDefaultAsync(sc => sc.Id == schoolClassId);
+				if (schoolClass == null)
+					return new ServiceResponse<bool> { Success = false, Message = "schoolClass not found" };
+
+				student.SchoolClass = schoolClass;
+				await _dbContext.SaveChangesAsync();
+
+				return new ServiceResponse<bool> { Data = true };
+
+			}
+			catch (Exception ex)
+			{
+				return new ServiceResponse<bool>() { Success = false, Message = ex.Message };
+			}
+		}
+
+		public async Task<ServiceResponse<List<GetStudentDto>>> GetStudents()
+		{
+			var response = new ServiceResponse<List<GetStudentDto>>();
+			try
+			{
+				var students = await _dbContext.Students
+					.Include(s => s.SchoolClass)
+					.ToListAsync();
+				response.Data = students.Select(s=>_mapper.Map<GetStudentDto>(s)).ToList();
 			}
 			catch (Exception ex)
 			{
@@ -79,9 +106,9 @@ namespace ElectronicJournal.Server.Services.Students
 			return response;
 		}
 
-		public async Task<ServiceResponse<StudentDto>> UpdateStudent(UpdateStudentDto updateStudentDto)
+		public async Task<ServiceResponse<GetStudentDto>> UpdateStudent(UpdateStudentDto updateStudentDto)
 		{
-			var respoonse = new ServiceResponse<StudentDto>();
+			var respoonse = new ServiceResponse<GetStudentDto>();
 			try
 			{
 				var Student = await _dbContext.Students
@@ -96,7 +123,7 @@ namespace ElectronicJournal.Server.Services.Students
 				_mapper.Map(updateStudentDto, Student);
 				await _dbContext.SaveChangesAsync();
 
-				respoonse.Data = _mapper.Map<StudentDto>(Student);
+				respoonse.Data = _mapper.Map<GetStudentDto>(Student);
 			}
 			catch (Exception ex)
 			{

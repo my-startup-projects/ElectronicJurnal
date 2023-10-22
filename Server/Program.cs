@@ -1,5 +1,9 @@
 using ElectronicJournal.Server.DataBase;
+using ElectronicJournal.Server.Services.Journals;
+using ElectronicJournal.Server.Services.Schedules;
+using ElectronicJournal.Server.Services.SchoolClasses;
 using ElectronicJournal.Server.Services.Students;
+using ElectronicJournal.Server.Services.Subjects;
 using ElectronicJournal.Server.Services.Teachers;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,8 +26,17 @@ namespace ElectronicJournal.Server
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
+			//builder.Services.AddControllers().AddJsonOptions(options =>
+			//{
+			//	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+			//});
+
 			builder.Services.AddScoped<ITeachersService, TeachersService>();
 			builder.Services.AddScoped<IStudentsService, StudentsService>();
+			builder.Services.AddScoped<ISchoolClassesService, SchoolClassesService>();
+			builder.Services.AddScoped<ISubjectsService, SubjectsService>();
+			builder.Services.AddScoped<ISchedulesService, SchedulesService>();
+			builder.Services.AddScoped<IJournalsService, JournalsService>();
 
 			builder.Services.AddAutoMapper(typeof(Program));
 			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

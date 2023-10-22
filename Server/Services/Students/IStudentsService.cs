@@ -1,6 +1,5 @@
 ﻿using ElectronicJournal.Shared.DTOs.StudentDto;
 using ElectronicJournal.Shared.Response;
-using ElectronicJournal.Shared.Entity;
 
 namespace ElectronicJournal.Server.Services.Students
 {
@@ -8,7 +7,8 @@ namespace ElectronicJournal.Server.Services.Students
 	{
 		Task<ServiceResponse<bool>> AddStudent(CreateStudentDto StudentDto);
 		Task<ServiceResponse<bool>> RemoveStudent(Guid StudentId);
-		Task<ServiceResponse<List<Student>>> GetStudents();
-		Task<ServiceResponse<StudentDto>> UpdateStudent(UpdateStudentDto updateStudentDto);
+		Task<ServiceResponse<List<GetStudentDto>>> GetStudents();
+		Task<ServiceResponse<GetStudentDto>> UpdateStudent(UpdateStudentDto updateStudentDto);
+		Task<ServiceResponse<bool>> AddStudentToSchoolClass(Guid studentId, Guid schoolClassId);
 	}
 }

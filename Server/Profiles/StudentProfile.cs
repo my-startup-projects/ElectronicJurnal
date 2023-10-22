@@ -9,7 +9,7 @@ namespace ElectronicJournal.Server.Profiles
 		{
 			CreateMap<CreateStudentDto, Student>();
 			CreateMap<UpdateStudentDto, Student>();
-			CreateMap<Student, StudentDto>()
+			CreateMap<Student, GetStudentDto>()
 				.ForMember(
 				dest => dest.SchoolClassFullName,
 				opt => opt.MapFrom(

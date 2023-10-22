@@ -1,6 +1,6 @@
 ﻿namespace ElectronicJournal.Shared.DTOs.StudentDto
 {
-	public class StudentDto
+	public class GetStudentDto
 	{
 		public string UserName { get; set; }
 		public Guid Id { get; set; }

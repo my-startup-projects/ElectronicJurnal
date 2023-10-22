@@ -79,9 +79,9 @@ namespace ElectronicJournal.Server.Services.Teachers
 			return response;
 		}
 
-		public async Task<ServiceResponse<TeacherDto>> UpdateTeacher(UpdateTeacherDto updateTeacherDto)
+		public async Task<ServiceResponse<GetTeacherDto>> UpdateTeacher(UpdateTeacherDto updateTeacherDto)
 		{
-			var respoonse = new ServiceResponse<TeacherDto>();
+			var respoonse = new ServiceResponse<GetTeacherDto>();
 			try
 			{
 				var teacher = await _dbContext.Teachers
@@ -96,7 +96,7 @@ namespace ElectronicJournal.Server.Services.Teachers
 				_mapper.Map(updateTeacherDto, teacher);
 				await _dbContext.SaveChangesAsync();
 
-				respoonse.Data = _mapper.Map<TeacherDto>(teacher);
+				respoonse.Data = _mapper.Map<GetTeacherDto>(teacher);
 			}
 			catch (Exception ex)
 			{

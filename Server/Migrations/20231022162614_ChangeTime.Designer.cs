@@ -3,6 +3,7 @@ using System;
 using ElectronicJournal.Server.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicJournal.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231022162614_ChangeTime")]
+    partial class ChangeTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,27 +58,11 @@ namespace ElectronicJournal.Server.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("JournalID")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("JournalID");
-
-                    b.ToTable("Grades");
-                });
-
-            modelBuilder.Entity("ElectronicJournal.Shared.Entity.GradeDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("GradeId")
-                        .HasColumnType("char(36)");
-
                     b.Property<int>("GradeValue")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("JournalID")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("StudentID")
                         .HasColumnType("char(36)");
@@ -85,11 +72,11 @@ namespace ElectronicJournal.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GradeId");
+                    b.HasIndex("JournalID");
 
                     b.HasIndex("StudentID");
 
-                    b.ToTable("GradeDetails");
+                    b.ToTable("Grades");
                 });
 
             modelBuilder.Entity("ElectronicJournal.Shared.Entity.Journal", b =>
@@ -261,24 +248,13 @@ namespace ElectronicJournal.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Journal");
-                });
-
-            modelBuilder.Entity("ElectronicJournal.Shared.Entity.GradeDetail", b =>
-                {
-                    b.HasOne("ElectronicJournal.Shared.Entity.Grade", "Grade")
-                        .WithMany("GradeDetails")
-                        .HasForeignKey("GradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ElectronicJournal.Shared.Entity.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Grade");
+                    b.Navigation("Journal");
 
                     b.Navigation("Student");
                 });
@@ -330,11 +306,6 @@ namespace ElectronicJournal.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("SchoolClass");
-                });
-
-            modelBuilder.Entity("ElectronicJournal.Shared.Entity.Grade", b =>
-                {
-                    b.Navigation("GradeDetails");
                 });
 
             modelBuilder.Entity("ElectronicJournal.Shared.Entity.SchoolClass", b =>

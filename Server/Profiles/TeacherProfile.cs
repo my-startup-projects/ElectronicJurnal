@@ -9,7 +9,7 @@ namespace ElectronicJournal.Server.Profiles
         {
             CreateMap<CreateTeacherDto, Teacher>();
             CreateMap<UpdateTeacherDto, Teacher>();
-            CreateMap<Teacher, TeacherDto>();
+            CreateMap<Teacher, GetTeacherDto>();
         }
     }
 }

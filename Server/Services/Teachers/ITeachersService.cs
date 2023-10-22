@@ -8,6 +8,6 @@ namespace ElectronicJournal.Server.Services.Teachers
 		Task<ServiceResponse<bool>> AddTeacher(CreateTeacherDto teacherDto);
 		Task<ServiceResponse<bool>> RemoveTeacher(Guid teacherId);
 		Task<ServiceResponse<List<Teacher>>> GetTeachers();
-		Task<ServiceResponse<TeacherDto>> UpdateTeacher(UpdateTeacherDto updateTeacherDto);
+		Task<ServiceResponse<GetTeacherDto>> UpdateTeacher(UpdateTeacherDto updateTeacherDto);
 	}
 }
