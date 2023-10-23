@@ -7,6 +7,7 @@ namespace ElectronicJurnal.Server
 	{
 		public static void Main(string[] args)
 		{
+
 			var builder = WebApplication.CreateBuilder(args);
 
 

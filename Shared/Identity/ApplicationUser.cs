@@ -1,3 +1,4 @@
+
 using ElectronicJurnal.Shared.Entity;
 
 namespace ElectronicJurnal.Shared.Identity;
