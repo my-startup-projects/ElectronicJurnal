@@ -10,8 +10,6 @@ namespace ElectronicJournal.Server.Profiles
 			CreateMap<CreateScheduleDto, Schedule>();
 			CreateMap<UpdateScheduleDto, Schedule>();
 			CreateMap<Schedule, GetScheduleDto>()
-				.ForMember(dest => dest.SchoolClass, opt => opt
-				.MapFrom(src => $"{src.SchoolClass.Course}{src.SchoolClass.Name}"))
 				.ForMember(dest => dest.Teacher, opt => opt
 				.MapFrom(src => src.Teacher.FullName))
 				.ForMember(dest => dest.Subject, opt => opt

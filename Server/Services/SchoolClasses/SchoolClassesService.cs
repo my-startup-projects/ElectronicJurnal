@@ -57,7 +57,7 @@ namespace ElectronicJournal.Server.Services.SchoolClasses
 			{
 				var schoolClasses = await _dbContext.SchoolClasses
 					.Include(sc => sc.Students)
-					.Include(sc => sc.Schedules)
+					.Include(sc => sc.Journals)
 					.ToListAsync();
 				return new ServiceResponse<List<GetSchoolClassDto>>()
 				{

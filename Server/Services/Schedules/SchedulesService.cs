@@ -56,7 +56,7 @@ namespace ElectronicJournal.Server.Services.Schedules
 			try
 			{
 				var schedules = await _dbContext.Schedules
-					.Include(s => s.SchoolClass)
+					.Include(s => s.Journal)
 					.Include(s => s.Teacher)
 					.Include(s => s.Subject)
 					.ToListAsync();

@@ -3,8 +3,8 @@
 	public class GetScheduleDto
 	{
 		public Guid Id { get; set; }
-		public Guid SchoolClassID { get; set; }
-		public string SchoolClass { get; set; }
+		public Guid JournalID { get; set; }
+		public string Journal { get; set; }
 		public Guid SubjectID { get; set; }
 		public string Subject { get; set; }
 		public Guid TeacherID { get; set; }
