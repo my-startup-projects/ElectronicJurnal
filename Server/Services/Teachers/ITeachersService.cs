@@ -1,6 +1,8 @@
 ﻿using ElectronicJournal.Shared.DTOs.TeacherDto;
 using ElectronicJournal.Shared.Response;
 using ElectronicJournal.Shared.Entity;
+using ElectronicJournal.Shared.DTOs.JournalDto;
+
 namespace ElectronicJournal.Server.Services.Teachers
 {
 	public interface ITeachersService
@@ -9,5 +11,7 @@ namespace ElectronicJournal.Server.Services.Teachers
 		Task<ServiceResponse<bool>> RemoveTeacher(Guid teacherId);
 		Task<ServiceResponse<List<Teacher>>> GetTeachers();
 		Task<ServiceResponse<GetTeacherDto>> UpdateTeacher(UpdateTeacherDto updateTeacherDto);
+		Task<ServiceResponse<List<GetJournalDto>>> GetJournals(Guid teacherId);
+
 	}
 }

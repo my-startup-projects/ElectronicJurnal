@@ -3,6 +3,7 @@ using ElectronicJournal.Shared.DTOs.TeacherDto;
 using ElectronicJournal.Shared.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace ElectronicJournal.Server.Controllers
 {
@@ -51,6 +52,13 @@ namespace ElectronicJournal.Server.Controllers
 			if (!response.Success)
 				return BadRequest(response.Message);
 			return Ok(response);
+		}
+
+		[HttpGet("GetJournals/{teacherId}")]
+		public async Task<IActionResult> GetJournalsByTeacherId(Guid teacherId)
+		{
+			var respons = await _teachersService.GetJournals(teacherId);
+			return Ok(respons);
 		}
 	}
 }

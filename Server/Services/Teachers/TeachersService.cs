@@ -1,4 +1,5 @@
 ﻿using ElectronicJournal.Server.DataBase;
+using ElectronicJournal.Shared.DTOs.JournalDto;
 using ElectronicJournal.Shared.DTOs.TeacherDto;
 using ElectronicJournal.Shared.Entity;
 using ElectronicJournal.Shared.Identity;
@@ -36,6 +37,27 @@ namespace ElectronicJournal.Server.Services.Teachers
 				response.Message = ex.Message.ToString();
 			}
 			return response;
+		}
+
+		public async Task<ServiceResponse<List<GetJournalDto>>> GetJournals(Guid teacherId)
+		{
+			try
+			{
+				var journals = await _dbContext.Journals
+					.Include(j => j.SchoolClass)
+					.Include(j => j.Schedules)
+					.ThenInclude(sc => sc.Teacher)
+					.Where(j => j.Schedules.Any(sc => sc.TeacherID == teacherId)
+					).ToListAsync();
+				return new ServiceResponse<List<GetJournalDto>>()
+				{
+					Data = journals.Select(j => _mapper.Map<GetJournalDto>(j)).ToList()
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ServiceResponse<List<GetJournalDto>>() { Success = false, Message = ex.Message };
+			}
 		}
 
 		public async Task<ServiceResponse<List<Teacher>>> GetTeachers()
