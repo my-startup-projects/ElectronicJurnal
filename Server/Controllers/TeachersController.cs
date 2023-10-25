@@ -57,8 +57,15 @@ namespace ElectronicJournal.Server.Controllers
 		[HttpGet("GetJournals/{teacherId}")]
 		public async Task<IActionResult> GetJournalsByTeacherId(Guid teacherId)
 		{
-			var respons = await _teachersService.GetJournals(teacherId);
-			return Ok(respons);
+			var response = await _teachersService.GetJournals(teacherId);
+			return Ok(response);
+		}
+
+		[HttpGet("GetSchedulesByJournal/{teacherId}/{journalId}")]
+		public async Task<IActionResult> GetSchedulesByJournal(Guid teacherId, Guid journalId)
+		{
+			var response = await _teachersService.GetSchedulesByJournal(journalId, teacherId);
+			return Ok(response);
 		}
 	}
 }

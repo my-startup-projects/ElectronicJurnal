@@ -60,6 +60,27 @@ namespace ElectronicJournal.Server.Services.Teachers
 			}
 		}
 
+		public async Task<ServiceResponse<List<GetScheduleDto>>> GetSchedulesByJournal(Guid journalId, Guid teacherId)
+		{
+			try
+			{
+				var schedues = await _dbContext.Schedules
+					.Include(sc => sc.Teacher)
+					.Include(sc => sc.Journal)
+					.Include(sc => sc.Subject)
+					.Where(sc => sc.TeacherID == teacherId && sc.JournalID == journalId)
+					.ToListAsync();
+				return new ServiceResponse<List<GetScheduleDto>>()
+				{
+					Data = schedues.Select(sc => _mapper.Map<GetScheduleDto>(sc)).ToList()
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ServiceResponse<List<GetScheduleDto>>() { Success = false, Message = ex.Message };
+			}
+		}
+
 		public async Task<ServiceResponse<List<Teacher>>> GetTeachers()
 		{
 			var response = new ServiceResponse<List<Teacher>>();
