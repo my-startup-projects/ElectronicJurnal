@@ -43,7 +43,7 @@ namespace ElectronicJournal.Server.Services.Journals
 			{
 				var journal = await _dbContext.Journals.FirstOrDefaultAsync(j => j.Id == journalId);
 				if (journal == null)
-					return new ServiceResponse<bool>() { Success = false, Message = "jourmal nout found" };
+					return new ServiceResponse<bool>() { Success = false, Message = "journal not found" };
 
 				_dbContext.Journals.Remove(journal);
 				await _dbContext.SaveChangesAsync();
@@ -53,6 +53,45 @@ namespace ElectronicJournal.Server.Services.Journals
 			catch (Exception ex)
 			{
 				return new ServiceResponse<bool>() { Success = false, Message = ex.Message };
+			}
+		}
+		public async Task<ServiceResponse<List<GetJournalDto>>> GetAll()
+		{
+			try
+			{
+				var journals = await _dbContext.Journals
+					.Include(j => j.SchoolClass).ToListAsync();
+				return new ServiceResponse<List<GetJournalDto>>()
+				{
+					Data = journals.Select(j => _mapper.Map<GetJournalDto>(j)).ToList(),
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ServiceResponse<List<GetJournalDto>>() { Success = false, Message = ex.Message };
+			}
+		}
+
+		public async Task<ServiceResponse<GetJournalDetailsDto>> GetJournal(Guid journalId)
+		{
+			try
+			{
+				var journal = await _dbContext.Journals
+					.Include(j => j.SchoolClass)
+					.Include(j => j.Schedules)
+					.ThenInclude(s => s.Teacher)
+					.Include(j => j.Schedules)
+					.ThenInclude(s => s.Subject)
+					.FirstOrDefaultAsync(j => j.Id == journalId);
+
+				return new ServiceResponse<GetJournalDetailsDto>
+				{
+					Data = _mapper.Map<GetJournalDetailsDto>(journal)
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ServiceResponse<GetJournalDetailsDto>() { Success = false, Message = ex.Message };
 			}
 		}
 	}

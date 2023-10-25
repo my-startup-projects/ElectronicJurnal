@@ -7,5 +7,7 @@ namespace ElectronicJournal.Server.Services.Journals
 	{
 		Task<ServiceResponse<Guid>> CreateJournal(CreateJournalDto createJournalDto);
 		Task<ServiceResponse<bool>> DeleteJournal(Guid jurnalId);
+		Task<ServiceResponse<List<GetJournalDto>>> GetAll();
+		Task<ServiceResponse<GetJournalDetailsDto>> GetJournal(Guid journalId);
 	}
 }
