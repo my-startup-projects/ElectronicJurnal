@@ -14,6 +14,5 @@ namespace ElectronicJournal.Server.Services.Teachers
 		Task<ServiceResponse<GetTeacherDto>> UpdateTeacher(UpdateTeacherDto updateTeacherDto);
 		Task<ServiceResponse<List<GetJournalDto>>> GetJournals(Guid teacherId);
 		Task<ServiceResponse<List<GetScheduleDto>>> GetSchedulesByJournal(Guid journalId, Guid teacherId);
-
 	}
 }

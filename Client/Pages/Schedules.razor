@@ -1,0 +1,108 @@
+﻿@page "/Schedules"
+
+<h2>Расписание</h2>
+
+<MudHidden Breakpoint="Breakpoint.Lg" Invert="true">
+	<MudGrid>
+		@for (int i = 1; i < 7; i++)
+		{
+			var day = DateTime.Today.AddDays(i - (int)DateTime.Today.DayOfWeek);
+			var color = day.Date == DateTime.Today ? Color.Success : (day.Date == selectedDay ? Color.Info : Color.Default);
+			<MudItem xs="2" sm="2" md="2">
+				<MudButton Variant="Variant.Filled" Color="@color" OnClick="@(() => ShowDay(day))">
+					@LongDaysOfWeek[(int)day.DayOfWeek] @day.Day
+				</MudButton>
+			</MudItem>
+		}
+	</MudGrid>
+</MudHidden>
+
+<MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
+	<MudGrid>
+		@for (int i = 1; i < 7; i++)
+		{
+			var day = DateTime.Today.AddDays(i - (int)DateTime.Today.DayOfWeek);
+			var color = day.Date == DateTime.Today ? Color.Success : (day.Date == selectedDay ? Color.Info : Color.Default);
+			<MudItem xs="2" sm="2" md="2">
+				<MudButton Variant="Variant.Filled" Color="@color" OnClick="@(() => ShowDay(day))">
+					@shortDaysOfWeek[(int)day.DayOfWeek] @day.Day
+				</MudButton>
+			</MudItem>
+		}
+	</MudGrid>
+</MudHidden>
+<br />
+<MudText Typo="Typo.h6">
+	<b>@dayText</b><small> -  @selectedDay.ToString("dd.MM.yyyy")</small>
+</MudText>
+
+<MudGrid>
+	@for (int i = 0; i < 3; i++)
+	{
+
+		var color = now >= startTime && now <= endTime ? "border-color: green;" : "border-color: initial;";
+
+		<MudItem xs="12" sm="12" md="12" lg="12">
+			<MudCard Outlined="true" Style=@color>
+				<MudCardContent>
+					<MudGrid>
+						<MudItem xs="4" sm="2">
+							<h5>@startTime.ToString("HH:mm")</h5>
+							@endTime.ToString("HH:mm")
+						</MudItem>
+						<MudItem xs="8" sm="10">
+							<h5>История Таджикистана</h5>
+							<h5><b>8A</b></h5>
+						</MudItem>
+					</MudGrid>
+				</MudCardContent>
+			</MudCard>
+		</MudItem>
+	}
+	<MudItem xs="12" sm="12" md="12" lg="12">
+		<MudCard Outlined="true" Style="border-color:green">
+			<MudCardContent>
+				<MudGrid>
+					<MudItem xs="4" sm="2" Style="color:green">
+						<h5>11:00</h5>
+						12:00
+					</MudItem>
+					<MudItem xs="8" sm="10">
+						<h5>История Таджикистана</h5>
+						<h5><b>8A</b></h5>
+					</MudItem>
+				</MudGrid>
+			</MudCardContent>
+		</MudCard>
+	</MudItem>
+</MudGrid>
+
+
+@code {
+	private string[] LongDaysOfWeek = new string[] { "", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" };
+	private string[] shortDaysOfWeek = new string[] { "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" };
+	private DateTime selectedDay = DateTime.Today;
+	private string dayText = "Сегодня";
+
+	private DateTime startTime = DateTime.Parse("08:00");
+	private DateTime endTime = DateTime.Parse("08:45");
+	private DateTime now = DateTime.Now;
+
+	void ShowDay(DateTime day)
+	{
+		Console.WriteLine($"You clicked on day {day.Day}");
+		selectedDay = day.Date;
+		if (selectedDay.Date == DateTime.Today)
+		{
+			dayText = "Сегодня";
+		}
+		else if (selectedDay.Date == DateTime.Today.AddDays(1))
+		{
+			dayText = "Завтра";
+		}
+		else
+		{
+			dayText = LongDaysOfWeek[(int)day.DayOfWeek];
+		}
+	}
+}
