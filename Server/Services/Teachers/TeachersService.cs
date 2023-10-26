@@ -81,6 +81,32 @@ namespace ElectronicJournal.Server.Services.Teachers
 			}
 		}
 
+		public async Task<ServiceResponse<List<Shared.DTOs.ScheduleDto.GetScheduleDto>>> GetSchedulesByTeacherAndDay(Guid teacherId, DayOfWeek dayOfWeek)
+		{
+			try
+			{
+				var schedues = await _dbContext.Schedules
+					.Include(sc => sc.Teacher)
+					.Include(sc => sc.Subject)
+					.Include(sc => sc.Journal)
+					.ThenInclude(j => j.SchoolClass)
+					.Where(sc => sc.TeacherID == teacherId && sc.DayOfWeek == dayOfWeek)
+					.ToArrayAsync();
+				return new ServiceResponse<List<Shared.DTOs.ScheduleDto.GetScheduleDto>>()
+				{
+					Data = schedues.Select(sc => _mapper.Map<Shared.DTOs.ScheduleDto.GetScheduleDto>(sc)).ToList()
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ServiceResponse<List<Shared.DTOs.ScheduleDto.GetScheduleDto>>()
+				{
+					Success = false,
+					Message = ex.Message
+				};
+			}
+		}
+
 		public async Task<ServiceResponse<List<Teacher>>> GetTeachers()
 		{
 			var response = new ServiceResponse<List<Teacher>>();

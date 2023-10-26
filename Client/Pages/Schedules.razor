@@ -1,4 +1,7 @@
 ﻿@page "/Schedules"
+@using ElectronicJournal.Shared.DTOs.ScheduleDto;
+
+@inject HttpClient Http
 
 <h2>Расписание</h2>
 
@@ -37,45 +40,29 @@
 </MudText>
 
 <MudGrid>
-	@for (int i = 0; i < 3; i++)
+	@if (_schedules != null)
 	{
-
-		var color = now >= startTime && now <= endTime ? "border-color: green;" : "border-color: initial;";
-
-		<MudItem xs="12" sm="12" md="12" lg="12">
-			<MudCard Outlined="true" Style=@color>
-				<MudCardContent>
-					<MudGrid>
-						<MudItem xs="4" sm="2">
-							<h5>@startTime.ToString("HH:mm")</h5>
-							@endTime.ToString("HH:mm")
-						</MudItem>
-						<MudItem xs="8" sm="10">
-							<h5>История Таджикистана</h5>
-							<h5><b>8A</b></h5>
-						</MudItem>
-					</MudGrid>
-				</MudCardContent>
-			</MudCard>
-		</MudItem>
+		@foreach (var sheduleDto in _schedules)
+		{
+			<MudItem xs="12" sm="12" md="6" lg="4">
+				<MudCard>
+					<MudCardContent>
+						<MudGrid>
+							<MudItem xs="4" sm="2">
+								<h5>@sheduleDto.Time</h5>
+							</MudItem>
+							<MudItem xs="8" sm="10">
+								<h5>@sheduleDto.Subject</h5>
+								<h5><b>@sheduleDto.Journal</b></h5>
+							</MudItem>
+						</MudGrid>
+					</MudCardContent>
+				</MudCard>
+			</MudItem>
+		}
 	}
-	<MudItem xs="12" sm="12" md="12" lg="12">
-		<MudCard Outlined="true" Style="border-color:green">
-			<MudCardContent>
-				<MudGrid>
-					<MudItem xs="4" sm="2" Style="color:green">
-						<h5>11:00</h5>
-						12:00
-					</MudItem>
-					<MudItem xs="8" sm="10">
-						<h5>История Таджикистана</h5>
-						<h5><b>8A</b></h5>
-					</MudItem>
-				</MudGrid>
-			</MudCardContent>
-		</MudCard>
-	</MudItem>
 </MudGrid>
+
 
 
 @code {
@@ -88,7 +75,7 @@
 	private DateTime endTime = DateTime.Parse("08:45");
 	private DateTime now = DateTime.Now;
 
-	void ShowDay(DateTime day)
+	private async Task ShowDay(DateTime day)
 	{
 		Console.WriteLine($"You clicked on day {day.Day}");
 		selectedDay = day.Date;
@@ -104,5 +91,18 @@
 		{
 			dayText = LongDaysOfWeek[(int)day.DayOfWeek];
 		}
+		await GetSchedules(day.DayOfWeek);
+		StateHasChanged();
+	}
+
+	private List<GetScheduleDto> _schedules = new List<GetScheduleDto>();
+	protected override async Task OnInitializedAsync()
+	{
+		await GetSchedules(DateTime.Today.DayOfWeek);
+	}
+
+	private async Task GetSchedules(DayOfWeek dayOfWeek)
+	{
+		_schedules = await Http.GetFromJsonAsync<List<GetScheduleDto>>($"http://192.168.43.173/api/Teachers/GetSchedulesByTeacherAndDayOfWeek/08dbd361-7e7a-482a-87fd-d0d7241b705b/{dayOfWeek}");
 	}
 }

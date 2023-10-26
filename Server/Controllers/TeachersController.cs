@@ -67,5 +67,12 @@ namespace ElectronicJournal.Server.Controllers
 			var response = await _teachersService.GetSchedulesByJournal(journalId, teacherId);
 			return Ok(response);
 		}
+
+		[HttpGet("GetSchedulesByTeacherAndDayOfWeek/{teacherId}/{dayOfWeek}")]
+		public async Task<IActionResult> GetSchedulesByTeacherAndDayOfWeek(Guid teacherId, DayOfWeek dayOfWeek)
+		{
+			var response = await _teachersService.GetSchedulesByTeacherAndDay(teacherId, dayOfWeek);
+			return Ok(response.Data);
+		}
 	}
 }
