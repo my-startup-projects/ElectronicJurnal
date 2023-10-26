@@ -13,7 +13,9 @@ namespace ElectronicJournal.Server.Profiles
 				.ForMember(dest => dest.Teacher, opt => opt
 				.MapFrom(src => src.Teacher.FullName))
 				.ForMember(dest => dest.Subject, opt => opt
-				.MapFrom(src => src.Subject.Name)
+				.MapFrom(src => src.Subject.Name))
+				.ForMember(src => src.Journal, opt => opt
+				.MapFrom(dest => $"{dest.Journal.SchoolClass.Course}{dest.Journal.SchoolClass.Name}")
 				);
 		}
 

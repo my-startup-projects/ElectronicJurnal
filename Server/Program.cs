@@ -25,7 +25,7 @@ namespace ElectronicJournal.Server
 
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
-
+			//	builder.WebHost.UseKestrel(s => s.Listen(System.Net.IPAddress.Any, 80));
 			//builder.Services.AddControllers().AddJsonOptions(options =>
 			//{
 			//	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
