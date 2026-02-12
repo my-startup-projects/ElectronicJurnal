@@ -1,0 +1,108 @@
+﻿@page "/Schedules"
+@using ElectronicJournal.Shared.DTOs.ScheduleDto;
+
+@inject HttpClient Http
+
+<h2>Расписание</h2>
+
+<MudHidden Breakpoint="Breakpoint.Lg" Invert="true">
+	<MudGrid>
+		@for (int i = 1; i < 7; i++)
+		{
+			var day = DateTime.Today.AddDays(i - (int)DateTime.Today.DayOfWeek);
+			var color = day.Date == DateTime.Today ? Color.Success : (day.Date == selectedDay ? Color.Info : Color.Default);
+			<MudItem xs="2" sm="2" md="2">
+				<MudButton Variant="Variant.Filled" Color="@color" OnClick="@(() => ShowDay(day))">
+					@LongDaysOfWeek[(int)day.DayOfWeek] @day.Day
+				</MudButton>
+			</MudItem>
+		}
+	</MudGrid>
+</MudHidden>
+
+<MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true">
+	<MudGrid>
+		@for (int i = 1; i < 7; i++)
+		{
+			var day = DateTime.Today.AddDays(i - (int)DateTime.Today.DayOfWeek);
+			var color = day.Date == DateTime.Today ? Color.Success : (day.Date == selectedDay ? Color.Info : Color.Default);
+			<MudItem xs="2" sm="2" md="2">
+				<MudButton Variant="Variant.Filled" Color="@color" OnClick="@(() => ShowDay(day))">
+					@shortDaysOfWeek[(int)day.DayOfWeek] @day.Day
+				</MudButton>
+			</MudItem>
+		}
+	</MudGrid>
+</MudHidden>
+<br />
+<MudText Typo="Typo.h6">
+	<b>@dayText</b><small> -  @selectedDay.ToString("dd.MM.yyyy")</small>
+</MudText>
+
+<MudGrid>
+	@if (_schedules != null)
+	{
+		@foreach (var sheduleDto in _schedules)
+		{
+			<MudItem xs="12" sm="12" md="6" lg="4">
+				<MudCard>
+					<MudCardContent>
+						<MudGrid>
+							<MudItem xs="4" sm="2">
+								<h5>@sheduleDto.Time</h5>
+							</MudItem>
+							<MudItem xs="8" sm="10">
+								<h5>@sheduleDto.Subject</h5>
+								<h5><b>@sheduleDto.Journal</b></h5>
+							</MudItem>
+						</MudGrid>
+					</MudCardContent>
+				</MudCard>
+			</MudItem>
+		}
+	}
+</MudGrid>
+
+
+
+@code {
+	private string[] LongDaysOfWeek = new string[] { "", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" };
+	private string[] shortDaysOfWeek = new string[] { "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" };
+	private DateTime selectedDay = DateTime.Today;
+	private string dayText = "Сегодня";
+
+	private DateTime startTime = DateTime.Parse("08:00");
+	private DateTime endTime = DateTime.Parse("08:45");
+	private DateTime now = DateTime.Now;
+
+	private async Task ShowDay(DateTime day)
+	{
+		Console.WriteLine($"You clicked on day {day.Day}");
+		selectedDay = day.Date;
+		if (selectedDay.Date == DateTime.Today)
+		{
+			dayText = "Сегодня";
+		}
+		else if (selectedDay.Date == DateTime.Today.AddDays(1))
+		{
+			dayText = "Завтра";
+		}
+		else
+		{
+			dayText = LongDaysOfWeek[(int)day.DayOfWeek];
+		}
+		await GetSchedules(day.DayOfWeek);
+		StateHasChanged();
+	}
+
+	private List<GetScheduleDto> _schedules = new List<GetScheduleDto>();
+	protected override async Task OnInitializedAsync()
+	{
+		await GetSchedules(DateTime.Today.DayOfWeek);
+	}
+
+	private async Task GetSchedules(DayOfWeek dayOfWeek)
+	{
+		_schedules = await Http.GetFromJsonAsync<List<GetScheduleDto>>($"http://192.168.43.173/api/Teachers/GetSchedulesByTeacherAndDayOfWeek/08dbd361-7e7a-482a-87fd-d0d7241b705b/{dayOfWeek}");
+	}
+}
